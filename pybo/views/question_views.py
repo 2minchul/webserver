@@ -1,25 +1,32 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import BadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
 from ..forms import QuestionForm
-from ..models import Question
+from ..models import Question, Category
 
 
 @login_required(login_url='common:login')
-def question_create(request):
+def question_create(request, category: str):
     """
     pybo 질문등록
     """
+    try:
+        category_obj = Category.objects.get(name=category)
+    except Category.DoesNotExist:
+        raise BadRequest("Invalid category")
+
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
             question = form.save(commit=False)
             question.author = request.user  # 추가한 속성 author 적용
             question.create_date = timezone.now()
+            question.category = category_obj
             question.save()
-            return redirect('pybo:list')
+            return redirect('pybo:list', category=category)
     else:
         form = QuestionForm()
     context = {'form': form}
@@ -59,5 +66,6 @@ def question_delete(request, question_id):
     if request.user != question.author:
         messages.error(request, '삭제권한이 없습니다')
         return redirect('pybo:detail', question_id=question.id)
+    category_name = question.category.name
     question.delete()
-    return redirect('pybo:list')
+    return redirect('pybo:list', category=category_name)

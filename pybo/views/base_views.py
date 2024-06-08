@@ -1,17 +1,24 @@
+from functools import lru_cache
+
 from django.core.exceptions import BadRequest
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 
 from pybo.forms import PostDetailRequestQuery
-from pybo.models import Question
+from pybo.models import Question, Category
 from pybo.services import retrieve_post_detail
 
 
+@lru_cache(maxsize=1)
+def _get_default_category():
+    return Category.objects.first().name
+
+
 def index(request):
-    return redirect('pybo:list')
+    return redirect('pybo:list', category=_get_default_category())
 
 
-def list_post(request):
+def list_post(request, category: str):
     """
     pybo 목록 출력
     """
@@ -19,13 +26,14 @@ def list_post(request):
     page = request.GET.get('page', '1')  # 페이지
 
     # 조회
-    question_list = Question.objects.order_by('-create_date')
+    question_qs = Question.objects.filter(category__name=category)
+    question_qs = question_qs.order_by('-create_date')
 
     # 페이징처리
-    paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
+    paginator = Paginator(question_qs, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
 
-    context = {'question_list': page_obj}
+    context = {'question_list': page_obj, 'category': category}
     return render(request, 'pybo/question_list.html', context)
 
 
