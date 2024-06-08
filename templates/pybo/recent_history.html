@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h3>최근 댓글 ({{ history.recent_comment_size }})</h3>
+
+    {% for comment in history.recent_comment %}
+        <p>
+            {{ comment.category_name }} | {{ comment.author.username }} | {{ comment.content }}
+            | {{ comment.create_date }}
+        </p>
+    {% endfor %}
+
+
+    <h3>최근 답변 ({{ history.recent_answer_size }})</h3>
+
+    {% for answer in history.recent_answer %}
+        <p>
+            {{ answer.question.category.name }} | {{ answer.author.username }} | {{ answer.content }}
+            | {{ answer.create_date }}
+        </p>
+    {% endfor %}
+
+{% endblock %}
