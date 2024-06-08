@@ -1,9 +1,13 @@
 from django.contrib import admin
-from .models import Question
+
+from .models import Question, Category
 
 
+@admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['subject']
 
 
-admin.site.register(Question, QuestionAdmin)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    search_fields = ['name']
