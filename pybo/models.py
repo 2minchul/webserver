@@ -38,3 +38,11 @@ class Comment(models.Model):
     modify_date = models.DateTimeField(null=True, blank=True)
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, null=True, blank=True, on_delete=models.CASCADE)
+
+    @property
+    def category_name(self) -> str:
+        if self.question:
+            return self.question.category.name
+        if self.answer:
+            return self.answer.question.category.name
+        return ''
