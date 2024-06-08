@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from pybo.forms import PostDetailRequestQuery
 from pybo.models import Question, Category
-from pybo.services import retrieve_post_detail
+from pybo.services import retrieve_post_detail, increase_view_count
 
 
 @lru_cache(maxsize=1)
@@ -46,6 +46,7 @@ def detail(request, question_id):
         raise BadRequest("Invalid request query")
 
     question = get_object_or_404(Question, pk=question_id)
+    increase_view_count(question_id)
     post_detail = retrieve_post_detail(question, params)
     context = {'post': post_detail}
     return render(request, 'pybo/question_detail.html', context)

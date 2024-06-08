@@ -2,7 +2,7 @@ from typing import Optional
 
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.db.models import Count
+from django.db.models import Count, F
 
 from pybo.dtos import PostDetail, UserProfile
 from pybo.forms import AnswerForm, PostDetailRequestQuery
@@ -54,3 +54,7 @@ def retrieve_user_profile(user: User, limit: int = 10):
         comment_page=comment_page,
     )
     return profile
+
+
+def increase_view_count(question_id: int):
+    Question.objects.filter(pk=question_id).update(view_count=F('view_count') + 1)
