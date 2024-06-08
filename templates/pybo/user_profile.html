@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>유저 네임</h3>
+    {{ profile.user.username }}
+
+    <h3>최근 게시물</h3>
+
+    {% for question in profile.post %}
+        <p>{{ question.subject }}</p>
+    {% endfor %}
+
+    <h3>최근 답변</h3>
+
+    {% for answer in profile.answer %}
+        <p>{{ answer.content }}</p>
+    {% endfor %}
+
+    <h3>최근 댓글</h3>
+
+    {% for comment in profile.comment %}
+        <p>{{ comment.content }}</p>
+    {% endfor %}
+
+{% endblock %}
