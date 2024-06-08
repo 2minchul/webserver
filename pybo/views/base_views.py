@@ -1,6 +1,6 @@
 from django.core.exceptions import BadRequest
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from pybo.forms import PostDetailRequestQuery
 from pybo.models import Question
@@ -8,6 +8,10 @@ from pybo.services import retrieve_post_detail
 
 
 def index(request):
+    return redirect('pybo:list')
+
+
+def list_post(request):
     """
     pybo 목록 출력
     """
