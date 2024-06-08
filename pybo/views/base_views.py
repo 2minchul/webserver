@@ -1,7 +1,10 @@
+from django.core.exceptions import BadRequest
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
-from ..models import Question
+from pybo.forms import PostDetailRequestQuery
+from pybo.models import Question
+from pybo.services import retrieve_post_detail
 
 
 def index(request):
@@ -26,6 +29,11 @@ def detail(request, question_id):
     """
     pybo 내용 출력
     """
+    params = PostDetailRequestQuery(request.GET)
+    if not params.is_valid():
+        raise BadRequest("Invalid request query")
+
     question = get_object_or_404(Question, pk=question_id)
-    context = {'question': question}
+    post_detail = retrieve_post_detail(question, params)
+    context = {'post': post_detail}
     return render(request, 'pybo/question_detail.html', context)

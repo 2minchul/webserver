@@ -1,6 +1,19 @@
 from django import forms
+from django.db.models import TextChoices
 
 from pybo.models import Question, Answer, Comment
+
+
+class PostDetailRequestQuery(forms.Form):
+    class AnswerOrder(TextChoices):
+        RECENT = 'recent', '최신순'
+        RECOMMEND = 'recommend', '추천순'
+
+    answer_page = forms.IntegerField(required=False)
+    answer_order = forms.ChoiceField(
+        choices=AnswerOrder.choices,
+        required=False,
+    )
 
 
 class QuestionForm(forms.ModelForm):
