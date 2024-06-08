@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import BadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
-from ..forms import AnswerForm
-from ..models import Question, Answer
+from pybo.forms import AnswerForm, PostDetailRequestQuery
+from pybo.models import Question, Answer
+from pybo.services import retrieve_post_detail
 
 
 @login_required(login_url='common:login')
@@ -24,7 +26,14 @@ def answer_create(request, question_id):
             return redirect('pybo:detail', question_id=question.id)
     else:
         form = AnswerForm()
-    context = {'question': question, 'form': form}
+
+    params = PostDetailRequestQuery(request.GET)
+    if not params.is_valid():
+        raise BadRequest("Invalid request query")
+
+    # form.errors 를 detail 페이지에 표시
+    post_detail = retrieve_post_detail(question, params, answer_form=form)
+    context = {'post': post_detail}
     return render(request, 'pybo/question_detail.html', context)
 
 
