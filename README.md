@@ -5,7 +5,11 @@
 - 총 6개 서비스 구현 (3개 + 3개)
 - 3분 시연 영상 제작 + ppt
 
+
+
 ![screencapture](https://github.com/kmu-webserver/djangobook/assets/25102702/670724d6-631b-48c9-a2fb-41c1e0335758)
+
+https://pybo.embition.ai 에 배포 되었습니다.
 
 ## How to run
 
