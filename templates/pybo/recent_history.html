@@ -1,24 +1,177 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <style>
+        .history-container {
+            width: 80%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+        }
 
-    <h3>최근 댓글 ({{ history.recent_comment_size }})</h3>
+        .history-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    {% for comment in history.recent_comment %}
-        <p>
-            {{ comment.category_name }} | {{ comment.author.username }} | {{ comment.content }}
-            | {{ comment.create_date }}
-        </p>
-    {% endfor %}
+        .history-header h2 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
 
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-    <h3>최근 답변 ({{ history.recent_answer_size }})</h3>
+        .tabs a {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #e7e7e7;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-    {% for answer in history.recent_answer %}
-        <p>
-            {{ answer.question.category.name }} | {{ answer.author.username }} | {{ answer.content }}
-            | {{ answer.create_date }}
-        </p>
-    {% endfor %}
+        .tabs a:hover {
+            background-color: #ddd;
+        }
 
+        .tabs a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+
+    <div class="history-container">
+        <div class="history-header">
+            <h2>최근 이력</h2>
+        </div>
+
+        <div class="tabs">
+            <a href="#recent-comments" class="tab-link active" data-tab="recent-comments">
+                최근 댓글 ({{ history.recent_comment_size }})
+            </a>
+            <a href="#recent-answers" class="tab-link" data-tab="recent-answers">
+                최근 답변 ({{ history.recent_answer_size }})
+            </a>
+        </div>
+
+        <div id="recent-comments" class="tab-content active">
+            <table>
+                <thead>
+                <tr>
+                    <th>구분</th>
+                    <th>글쓴이</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in history.recent_comment %}
+                    <tr>
+                        <td>{{ comment.category_name }}</td>
+                        <td>{{ comment.author.username }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.create_date }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">최근 댓글이 없습니다.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="recent-answers" class="tab-content">
+            <table>
+                <thead>
+                <tr>
+                    <th>구분</th>
+                    <th>글쓴이</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for answer in history.recent_answer %}
+                    <tr>
+                        <td>{{ answer.question.category.name }}</td>
+                        <td>{{ answer.author.username }}</td>
+                        <td>{{ answer.content }}</td>
+                        <td>{{ answer.create_date }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">최근 답변이 없습니다.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for tab functionality
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Remove active class from all links
+                document.querySelectorAll('.tab-link').forEach(item => item.classList.remove('active'));
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                // Show the selected tab content
+                const activeTab = this.getAttribute('data-tab');
+                document.getElementById(activeTab).classList.add('active');
+            });
+        });
+    </script>
 {% endblock %}

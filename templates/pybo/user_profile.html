@@ -1,25 +1,282 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>유저 네임</h3>
-    {{ profile.user.username }}
+    <style>
+        .profile-container {
+            width: 80%;
+            margin: 40px auto; /* 상단 navbar와 간격 조정 */
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 14px; /* 기본 글씨 크기 조절 */
+        }
 
-    <h3>최근 게시물</h3>
+        .profile-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    {% for question in profile.post %}
-        <p>{{ question.subject }}</p>
-    {% endfor %}
+        .profile-header h2 {
+            margin: 0;
+            color: #333;
+            font-size: 24px; /* 이름 크기 약간 줄임 */
+        }
 
-    <h3>최근 답변</h3>
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-    {% for answer in profile.answer %}
-        <p>{{ answer.content }}</p>
-    {% endfor %}
+        .tabs a {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #e7e7e7; /* 기본 배경색 변경 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px; /* 탭 글씨 크기 줄임 */
+            transition: background-color 0.3s ease, color 0.3s ease; /* 부드러운 전환 효과 */
+        }
 
-    <h3>최근 댓글</h3>
+        .tabs a:hover {
+            background-color: #ddd; /* 호버 시 배경색 */
+        }
 
-    {% for comment in profile.comment %}
-        <p>{{ comment.content }}</p>
-    {% endfor %}
+        .tabs a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
 
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px; /* 테이블 글씨 크기 조절 */
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* 짝수 행 배경색 */
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease; /* 부드러운 전환 효과 */
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        .pagination a:hover {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tabs a {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>{{ profile.user.username }}</h2>
+        </div>
+
+        <div class="tabs">
+            <a href="#basic-info" class="tab-link active" data-tab="basic-info">기본정보</a>
+            <a href="#posts" class="tab-link" data-tab="posts">게시</a>
+            <a href="#answers" class="tab-link" data-tab="answers">답변</a>
+            <a href="#comments" class="tab-link" data-tab="comments">댓글</a>
+        </div>
+
+        <div id="basic-info" class="tab-content active">
+            <h4>기본 정보</h4>
+            <br>
+            <p><strong>이메일:</strong> {{ profile.user.email }}</p>
+            <p><strong>가입 날짜:</strong> {{ profile.user.date_joined }}</p>
+        </div>
+
+        <div id="posts" class="tab-content">
+            <h4>최근 게시물</h4>
+            <br>
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성 날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in profile.post %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ post.subject }}</td>
+                        <td>{{ post.create_date }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">작성한 게시물이 없습니다.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+{#            <ul class="pagination">#}
+{#                <li><a href="#">이전</a></li>#}
+{#                <li><a href="#" class="active">1</a></li>#}
+{#                <li><a href="#">2</a></li>#}
+{#                <li><a href="#">다음</a></li>#}
+{#            </ul>#}
+        </div>
+
+        <div id="answers" class="tab-content">
+            <h4>최근 답변</h4>
+            <br>
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>구분</th>
+                    <th>추천</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for answer in profile.answer %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ answer.category_name }}</td>
+                        <td>{{ answer.upvote_count }}</td>
+                        <td>{{ answer.content }}</td>
+                        <td>{{ answer.create_date }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">작성한 답변이 없습니다.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+{#            <ul class="pagination">#}
+{#                <li><a href="#">이전</a></li>#}
+{#                <li><a href="#" class="active">1</a></li>#}
+{#                <li><a href="#">2</a></li>#}
+{#                <li><a href="#">다음</a></li>#}
+{#            </ul>#}
+        </div>
+
+        <div id="comments" class="tab-content">
+            <h4>최근 댓글</h4>
+            <br>
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in profile.comment %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.create_date }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">작성한 댓글이 없습니다.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+{#            <ul class="pagination">#}
+{#                <li><a href="#">이전</a></li>#}
+{#                <li><a href="#" class="active">1</a></li>#}
+{#                <li><a href="#">2</a></li>#}
+{#                <li><a href="#">다음</a></li>#}
+{#            </ul>#}
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for tab functionality
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Remove active class from all links
+                document.querySelectorAll('.tab-link').forEach(item => item.classList.remove('active'));
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                // Show the selected tab content
+                const activeTab = this.getAttribute('data-tab');
+                document.getElementById(activeTab).classList.add('active');
+            });
+        });
+    </script>
 {% endblock %}
