@@ -4,7 +4,7 @@ DEBUG = True
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-ALLOWED_HOSTS = ["pybo.embition.ai"]
+ALLOWED_HOSTS = ["pybo.embition.ai", "*"]
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
 DATABASES = {
