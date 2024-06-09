@@ -25,6 +25,9 @@ SECRET_KEY = 'ls&1oied3t*np!^y6664m!j2-l%ie=8g$w-bjk_pjryzd#3y6b'
 DEBUG = True
 
 ALLOWED_HOSTS = ["pybo.embition.ai", "*"]
+CSRF_TRUSTED_ORIGINS = ["http://pybo.embition.ai", "https://pybo.embition.ai"]
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Application definition
 
