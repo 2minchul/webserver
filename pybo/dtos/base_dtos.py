@@ -17,3 +17,4 @@ class PostDetail(BaseContext):
     answer_count: int
     answer_list: Iterable[Answer]
     answer_form: Optional[AnswerForm]
+    answer_order: str
