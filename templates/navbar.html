@@ -14,7 +14,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     {% if user.is_authenticated %}
-                    <form method="post" action="{% url 'common:logout' %}">
+                    <form method="post" action="{% url 'common:logout' %}" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-link nav-link">{{ user.username }} (로그아웃)</button>
                     </form>
@@ -28,6 +28,16 @@
                     {% endif %}
                 </li>
             </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">최근 이력</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">프로필</a>
+                </li>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </nav>
