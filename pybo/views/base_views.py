@@ -11,7 +11,7 @@ from pybo.services import retrieve_post_detail, increase_view_count
 
 @lru_cache(maxsize=1)
 def _get_default_category():
-    return Category.objects.first().name
+    return Category.objects.first().path
 
 
 def index(request):
