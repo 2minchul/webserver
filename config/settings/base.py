@@ -25,6 +25,7 @@ ENV = os.getenv("ENV", "local")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
+CSRF_TRUSTED_ORIGINS = ["http://pybo.embition.ai", "https://pybo.embition.ai"]
 SOCIALACCOUNT_LOGIN_ON_GET = True
 MESSAGE_LEVEL = messages.constants.WARNING
 
