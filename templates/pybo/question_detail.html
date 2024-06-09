@@ -144,6 +144,7 @@
     <!-- 페이징처리 시작 -->
     <form id="pageForm" method="get" action="{% url 'pybo:detail' post.question.id %}">
         <input type="hidden" id="page" name="answer_page" value="{{ post.answer_page.number }}">
+        <input type="hidden" id="order" name="answer_order" value="{{ post.answer_order|default_if_none:'' }}">
     </form>
     <ul class="pagination justify-content-center">
         <!-- 이전페이지 -->
@@ -224,6 +225,15 @@ const page_elements = document.getElementsByClassName("page-link");
 Array.from(page_elements).forEach(function (element) {
     element.addEventListener('click', function () {
         document.getElementById('page').value = this.dataset.page;
+        document.getElementById('pageForm').submit();
+    });
+});
+
+const order_btn = document.getElementsByClassName("so-link");
+Array.from(order_btn).forEach(function (element) {
+    element.addEventListener('click', function () {
+        document.getElementById('page').value = 1;  // 정렬을 클릭할 경우 1 페이지부터 조회한다.
+        document.getElementById('order').value = element.getAttribute("data-so")
         document.getElementById('pageForm').submit();
     });
 });

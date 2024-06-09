@@ -33,6 +33,7 @@ def retrieve_post_detail(question: Question, params: PostDetailRequestQuery, ans
         answer_page=page,
         answer_list=list(page.object_list),
         answer_form=answer_form,
+        answer_order=answer_order,
     )
 
 
