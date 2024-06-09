@@ -5,22 +5,32 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- pybo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <!-- pybo CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <title>Hello, pybo!</title>
-    <meta name="google-site-verification" content="zD5CZcg3lBC97o_cX7kOBDZzBafwJFovlF4Si_cUwi0" />
+    <meta name="google-site-verification" content="zD5CZcg3lBC97o_cX7kOBDZzBafwJFovlF4Si_cUwi0"/>
+    <style>
+
+    </style>
 </head>
 <body>
 <!-- 네비게이션바 -->
 {% include "navbar.html" %}
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-{% block content %}
-{% endblock %}
-<!-- 기본 템플릿 안에 삽입될 내용 End -->
+<div class="content-wrapper">
+    <div class="sidebar">
+        {% include "sidebar.html" %}
+    </div>
+    <div class="content">
+        <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+        {% block content %}
+        {% endblock %}
+        <!-- 기본 템플릿 안에 삽입될 내용 End -->
+    </div>
+</div>
 <!-- jQuery JS -->
 <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
 <!-- Bootstrap JS -->
