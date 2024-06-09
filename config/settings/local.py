@@ -7,7 +7,6 @@ SECRET_KEY = 'ls&1oied3t*np!^y6664m!j2-l%ie=8g$w-bjk_pjryzd#3y6b'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-# CSRF_TRUSTED_ORIGINS = []
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 DATABASES = {
