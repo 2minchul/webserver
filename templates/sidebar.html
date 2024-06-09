@@ -1,9 +1,10 @@
 <!-- Sidebar  -->
 <nav id="sidebar" class="border-top border-secondary">
     <div class="list-group centered-list-group">
-        <a class="rounded-0 list-group-item list-group-item-action list-group-item-light
-               {% if category.name == 'qna' %}active{% endif %}" href="{% url 'pybo:list' "qna" %}">질문과답변</a>
-        <a class="rounded-0 list-group-item list-group-item-action list-group-item-light
-               {% if category.name == 'random' %}active{% endif %}" href="{% url 'pybo:list' "random" %}">자유게시판</a>
+        {% for category_item in categories %}
+            <a class="rounded-0 list-group-item list-group-item-action list-group-item-light
+               {% if category_item.path == category %}active{% endif %}"
+               href="{% url 'pybo:list' category_item.path %}">{{ category_item.name }}</a>
+        {% endfor %}
     </div>
 </nav>
