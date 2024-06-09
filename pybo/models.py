@@ -22,6 +22,10 @@ class Question(models.Model):
     def __str__(self):
         return self.subject
 
+    @property
+    def upvote_count(self) -> int:
+        return self.voter.count()
+
 
 class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_answer')
