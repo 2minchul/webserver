@@ -14,7 +14,7 @@ def question_create(request, category: str):
     pybo 질문등록
     """
     try:
-        category_obj = Category.objects.get(name=category)
+        category_obj = Category.objects.get(path=category)
     except Category.DoesNotExist:
         raise BadRequest("Invalid category")
 
@@ -66,6 +66,6 @@ def question_delete(request, question_id):
     if request.user != question.author:
         messages.error(request, '삭제권한이 없습니다')
         return redirect('pybo:detail', question_id=question.id)
-    category_name = question.category.name
+    category_path = question.category.path
     question.delete()
-    return redirect('pybo:list', category=category_name)
+    return redirect('pybo:list', category=category_path)

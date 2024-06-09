@@ -26,7 +26,7 @@ def list_post(request, category: str):
     page = request.GET.get('page', '1')  # 페이지
 
     # 조회
-    question_qs = Question.objects.filter(category__name=category)
+    question_qs = Question.objects.filter(category__path=category)
     question_qs = question_qs.order_by('-create_date')
 
     # 페이징처리
