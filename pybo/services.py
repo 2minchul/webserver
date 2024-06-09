@@ -22,6 +22,8 @@ def retrieve_post_detail(question: Question, params: PostDetailRequestQuery, ans
         answer_qs = answer_qs.order_by('create_date')
 
     paginator = Paginator(answer_qs, answer_page_limit)
+    if answer_page == -1:
+        answer_page = paginator.num_pages
 
     page = paginator.get_page(answer_page)
 
