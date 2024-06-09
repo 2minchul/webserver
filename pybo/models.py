@@ -31,6 +31,14 @@ class Answer(models.Model):
     modify_date = models.DateTimeField(null=True, blank=True)
     voter = models.ManyToManyField(User, related_name='voter_answer')
 
+    @property
+    def upvote_count(self) -> int:
+        return self.voter.count()
+
+    @property
+    def category_name(self) -> str:
+        return self.question.category.name
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

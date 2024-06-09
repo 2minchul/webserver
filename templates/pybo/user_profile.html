@@ -170,7 +170,7 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ post.subject }}</td>
-                        <td>{{ post.date }}</td>
+                        <td>{{ post.create_date }}</td>
                     </tr>
                 {% empty %}
                     <tr>
@@ -179,12 +179,12 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <ul class="pagination">
-                <li><a href="#">이전</a></li>
-                <li><a href="#" class="active">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">다음</a></li>
-            </ul>
+{#            <ul class="pagination">#}
+{#                <li><a href="#">이전</a></li>#}
+{#                <li><a href="#" class="active">1</a></li>#}
+{#                <li><a href="#">2</a></li>#}
+{#                <li><a href="#">다음</a></li>#}
+{#            </ul>#}
         </div>
 
         <div id="answers" class="tab-content">
@@ -204,10 +204,10 @@
                 {% for answer in profile.answer %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ answer.category }}</td>
-                        <td>{{ answer.upvotes }}</td>
+                        <td>{{ answer.category_name }}</td>
+                        <td>{{ answer.upvote_count }}</td>
                         <td>{{ answer.content }}</td>
-                        <td>{{ answer.date }}</td>
+                        <td>{{ answer.create_date }}</td>
                     </tr>
                 {% empty %}
                     <tr>
@@ -216,12 +216,12 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <ul class="pagination">
-                <li><a href="#">이전</a></li>
-                <li><a href="#" class="active">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">다음</a></li>
-            </ul>
+{#            <ul class="pagination">#}
+{#                <li><a href="#">이전</a></li>#}
+{#                <li><a href="#" class="active">1</a></li>#}
+{#                <li><a href="#">2</a></li>#}
+{#                <li><a href="#">다음</a></li>#}
+{#            </ul>#}
         </div>
 
         <div id="comments" class="tab-content">
@@ -240,7 +240,7 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ comment.content }}</td>
-                        <td>{{ comment.date }}</td>
+                        <td>{{ comment.create_date }}</td>
                     </tr>
                 {% empty %}
                     <tr>
@@ -249,12 +249,12 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <ul class="pagination">
-                <li><a href="#">이전</a></li>
-                <li><a href="#" class="active">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">다음</a></li>
-            </ul>
+{#            <ul class="pagination">#}
+{#                <li><a href="#">이전</a></li>#}
+{#                <li><a href="#" class="active">1</a></li>#}
+{#                <li><a href="#">2</a></li>#}
+{#                <li><a href="#">다음</a></li>#}
+{#            </ul>#}
         </div>
     </div>
 
