@@ -31,10 +31,10 @@
             {% if user.is_authenticated %}
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">최근 이력</a>
+                    <a class="nav-link" href="{% url 'pybo:recent_history' %}">최근 이력</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">프로필</a>
+                    <a class="nav-link" href="{% url 'pybo:user_profile' user.pk %}">프로필</a>
                 </li>
             </ul>
             {% endif %}
