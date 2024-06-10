@@ -60,3 +60,6 @@ class Comment(models.Model):
         if self.answer:
             return self.answer.question.category.name
         return ''
+
+    def __str__(self):
+        return f'{self.author} - {self.content}'
